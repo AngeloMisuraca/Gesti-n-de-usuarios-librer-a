@@ -1,0 +1,54 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f6f8;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #24396C;
+  color: white;
+}
+
+button {
+  background: #CCDB42;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#formSection {
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+#cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card h3 {
+  margin: 0;
+}
