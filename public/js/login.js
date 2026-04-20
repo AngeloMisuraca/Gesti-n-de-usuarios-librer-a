@@ -20,6 +20,7 @@ loginForm?.addEventListener("submit", async (event) => {
     const result = await response.json();
 
     if (result.success) {
+      sessionStorage.setItem("username", result.username || payload.username);
       window.location.href = "dashboard.html";
       return;
     }

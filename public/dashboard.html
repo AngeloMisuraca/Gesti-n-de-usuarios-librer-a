@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de libros</title>
+  <title>Gestion de libros</title>
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body class="dashboard-page">
   <header class="dashboard-header">
-    <h1>Gestión de libros</h1>
-    <button id="logoutButton" class="dashboard-button" type="button">Cerrar sesión</button>
+    <h1>Gestion de libros</h1>
+    <div class="dashboard-userbar">
+      <span id="usernameLabel" class="dashboard-username">Usuario conectado</span>
+      <button id="logoutButton" class="dashboard-button" type="button">Cerrar sesion</button>
+    </div>
   </header>
 
   <main class="dashboard-layout">
     <section id="formSection" class="dashboard-form">
       <input type="hidden" id="bookId">
-      <input type="text" id="title" placeholder="Título">
+      <input type="text" id="title" placeholder="Titulo">
       <input type="text" id="author" placeholder="Autor">
-      <input type="number" id="year" placeholder="Año">
+      <input type="number" id="year" placeholder="Ano">
       <button id="addButton" class="dashboard-button" type="button">Guardar</button>
     </section>
 

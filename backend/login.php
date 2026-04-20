@@ -5,31 +5,38 @@ require "config.php";
 header("Content-Type: application/json");
 
 $data = json_decode(file_get_contents("php://input"), true);
-
 $username = trim($data["username"] ?? "");
 $password = $data["password"] ?? "";
 
 if ($username === "" || $password === "") {
-  echo json_encode(["success" => false, "message" => "Usuario y contraseña obligatorios"]);
+  echo json_encode(["success" => false, "message" => "Usuario y contrasena obligatorios"]);
   exit;
 }
 
 try {
   $connection = getDbConnection();
   $safeUsername = $connection->real_escape_string($username);
-  $sql = "SELECT username, password FROM users WHERE username = '{$safeUsername}' LIMIT 1";
+  $safePassword = $connection->real_escape_string($password);
+
+  $sql = "SELECT id, username FROM users WHERE username = '{$safeUsername}' AND password = '{$safePassword}' LIMIT 1";
   $result = $connection->query($sql);
   $user = $result ? $result->fetch_assoc() : null;
 
-  if ($user && $password === $user["password"]) {
-    $_SESSION["user"] = $user["username"];
-    echo json_encode(["success" => true]);
-  } else {
+  if (!$user) {
     echo json_encode(["success" => false, "message" => "Credenciales incorrectas"]);
+    $connection->close();
+    exit;
   }
 
+  $_SESSION["user_id"] = (int) $user["id"];
+  $_SESSION["username"] = $user["username"];
+
+  echo json_encode([
+    "success" => true,
+    "username" => $user["username"]
+  ]);
   $connection->close();
 } catch (Throwable $e) {
   http_response_code(500);
-  echo json_encode(["success" => false, "message" => "Error de conexión con la base de datos"]);
+  echo json_encode(["success" => false, "message" => "Error de conexion con la base de datos"]);
 }

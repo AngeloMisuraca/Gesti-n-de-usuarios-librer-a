@@ -4,12 +4,11 @@ require "config.php";
 header("Content-Type: application/json");
 
 $data = json_decode(file_get_contents("php://input"), true);
+$username = trim($data["username"] ?? "");
+$password = $data["password"] ?? "";
 
-$username = trim($data['username'] ?? '');
-$password = $data['password'] ?? '';
-
-if ($username === '' || $password === '') {
-  echo json_encode(["success" => false, "message" => "Usuario y contraseña obligatorios"]);
+if ($username === "" || $password === "") {
+  echo json_encode(["success" => false, "message" => "Usuario y contrasena obligatorios"]);
   exit;
 }
 
@@ -29,13 +28,11 @@ try {
   }
 
   $insertSql = "INSERT INTO users (username, password) VALUES ('{$safeUsername}', '{$safePassword}')";
-  if (!$connection->query($insertSql)) {
-    throw new RuntimeException("Error en el alta de usuario");
-  }
-
-  $connection->close();
+  $connection->query($insertSql);
 
   echo json_encode(["success" => true, "message" => "Usuario registrado correctamente"]);
+  $connection->close();
 } catch (Throwable $e) {
+  http_response_code(500);
   echo json_encode(["success" => false, "message" => "No se pudo registrar el usuario"]);
 }
